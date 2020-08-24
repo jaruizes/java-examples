@@ -1,0 +1,32 @@
+Mazda RX4,160
+Mazda RX4 Wag,160
+Datsun 710,108
+Hornet 4 Drive,258
+Hornet Sportabout,360
+Valiant,225
+Duster 360,360
+Merc 240D,146
+Merc 230,140
+Merc 280,167
+Merc 280C,167
+Merc 450SE,275
+Merc 450SL,275
+Merc 450SLC,275
+Cadillac Fleetwood,472
+Lincoln Continental,460
+Chrysler Imperial,440
+Fiat 128,78
+Honda Civic,75
+Toyota Corolla,71
+Toyota Corona,120
+Dodge Challenger,318
+AMC Javelin,304
+Camaro Z28,350
+Pontiac Firebird,400
+Fiat X1-9,79
+Porsche 914-2,120
+Lotus Europa,95
+Ford Pantera L,351
+Ferrari Dino,145
+Maserati Bora,335
+Volvo 142E,121
