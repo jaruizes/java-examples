@@ -11,6 +11,56 @@ import static java.util.Comparator.comparing;
 
 public class ReadAndProcessCars {
 
+    /**
+     * Processor used to process file "cars.csv"
+     */
+    public static final CarsProcessor processorOne = (carsData) -> {
+        final List<Car> cars = new ArrayList<>();
+
+        while (carsData.hasNext()) {
+            String carData = carsData.nextLine();
+            String name = carData.substring(1, carData.lastIndexOf('"'));
+            List<String> values = Arrays.asList(carData.substring(carData.lastIndexOf('"') + 2).split(","));
+            int power = Integer.parseInt(values.get(2));
+            cars.add(new Car(name, power));
+        }
+
+        return cars;
+    };
+
+    /**
+     * Processor used to process file "cars2.txt"
+     */
+    private static final CarsProcessor processorTwo = (carsData) -> {
+        final List<Car> cars = new ArrayList<>();
+
+        while (carsData.hasNext()) {
+            String carData = carsData.nextLine();
+            cars.add(stringToCar(carData));
+        }
+
+        return cars;
+    };
+
+    /**
+     * Function object (java.util.function.Function<T, R>) used to convert data in String to Car object
+     */
+    private static final Function<String, Car> stringToCarFunction = (data) -> stringToCar(data);
+
+    /**
+     * Processor using a Function object to process file "cars2.txt"
+     */
+    private static final CarsProcessor processorThree = (carsData) -> {
+        final List<Car> cars = new ArrayList<>();
+
+        while (carsData.hasNext()) {
+            cars.add(stringToCarFunction.apply(carsData.nextLine()));
+        }
+
+        return cars;
+    };
+
+
     private static List<Car> readAndProcess(String file, CarsProcessor carsProcessor) {
         List<Car> cars = new ArrayList<>();
         try (Scanner scanner = new Scanner(Paths.get(file).toFile())) {
@@ -36,54 +86,6 @@ public class ReadAndProcessCars {
     }
 
     public static void main(String[] args) {
-        /**
-         * Processor used to process file "cars.csv"
-         */
-        final CarsProcessor processorOne = (carsData) -> {
-            final List<Car> cars = new ArrayList<>();
-
-            while (carsData.hasNext()) {
-                String carData = carsData.nextLine();
-                String name = carData.substring(1, carData.lastIndexOf('"'));
-                List<String> values = Arrays.asList(carData.substring(carData.lastIndexOf('"') + 2).split(","));
-                int power = Integer.parseInt(values.get(2));
-                cars.add(new Car(name, power));
-            }
-
-            return cars;
-        };
-
-        /**
-         * Processor used to process file "cars2.txt"
-         */
-        final CarsProcessor processorTwo = (carsData) -> {
-            final List<Car> cars = new ArrayList<>();
-
-            while (carsData.hasNext()) {
-                String carData = carsData.nextLine();
-                cars.add(stringToCar(carData));
-            }
-
-            return cars;
-        };
-
-        /**
-         * Function object (java.util.function.Function<T, R>) used to convert data in String to Car object
-         */
-        final Function<String, Car> stringToCarFunction = (data) -> stringToCar(data);
-
-        /**
-         * Processor using a Function object to process file "cars2.txt"
-         */
-        final CarsProcessor processorThree = (carsData) -> {
-            final List<Car> cars = new ArrayList<>();
-
-            while (carsData.hasNext()) {
-                cars.add(stringToCarFunction.apply(carsData.nextLine()));
-            }
-
-            return cars;
-        };
 
         List<Car> cars1 = readAndProcess("resources/cars.csv", processorOne);
         cars1.sort(comparing(Car::getPower));
